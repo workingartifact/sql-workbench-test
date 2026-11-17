@@ -8,3 +8,23 @@ h2,.panel-heading>span,.object-note,.column-row,.column-row small,.relationship,
 .safe-export{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
 .safe-export input{accent-color:var(--green)}
 @media(max-width:760px){.export-actions{flex-wrap:wrap;justify-content:flex-end;max-width:220px}.safe-export{width:100%;justify-content:flex-end}.cm-scroller{font-size:13px}.editor-foot{font-size:10px}.results-panel{height:420px}.statusbar{font-size:10px}.column-row,.relationship{font-size:12px}}
+
+/* Workbench layout and neutral interface palette */
+:root{--bg:#101417;--panel:#181e23;--panel2:#20282e;--line:#38444d;--text:#e3ebef;--muted:#a6b4be;--green:#79d8c2;--green2:#91cfdf;--side:276px;--editor:50%}
+.masthead{height:56px;background:#111619}.contextbar,.statusbar,.worksheets,.execution-toolbar,.object-panel .panel-heading,.editor-foot,.pagination{background:#1b2329}
+.sigil,.pill,.key-tag{border-color:#48736d}button,.button,.search{background:#151c21}button:hover,.button:hover{background:#29363e;border-color:#718992}button.primary{color:#102820}button.primary:hover{background:#a2e8d8}
+h2{font:600 12px Arial,sans-serif;letter-spacing:.07em}.panel-heading>span,.object-note,.explorer-foot{font-size:11px}
+button.table-link{font-size:12px}button.table-link.selected{background:#243a3b}button.table-link .table-icon,.schema-group>summary span,i{color:#9aabb4}
+.column-row{font-size:11px;border-color:var(--line)}.column-row small,.key-tag{font-size:10px}.null-tag{color:var(--muted)}
+.object-facts{display:grid;gap:6px;margin:0 0 12px;padding:9px;background:var(--panel2)}.object-facts div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:6px}.object-facts dt{color:var(--muted)}.object-facts dd{margin:0;overflow-wrap:anywhere}
+.work-area{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:minmax(175px,min(var(--editor),calc(100% - 205px))) 6px minmax(190px,1fr)}
+.editor-zone{display:flex;flex-direction:column;min-width:0;min-height:0}.editor-panel{height:auto;flex:1;min-height:0}.execution-toolbar{flex-wrap:wrap}.execution-toolbar .engine-label{display:none}.worksheets button.active{background:#243338}
+#row-divider,.results-panel{grid-column:1/-1}.divider{background:#232d34}.divider:hover,.divider:focus{background:#5e948b}
+.chart-panel{min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--line);background:var(--panel);padding:0 14px 14px}.chart-panel .panel-heading{padding-inline:0;border-bottom:1px solid var(--line);margin-bottom:12px}
+.chart-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chart-options label{display:grid;gap:4px;color:var(--muted);min-width:0}.chart-options select{min-width:0;width:100%;padding:5px;background:#12191e;color:var(--text);border:1px solid var(--line);border-radius:3px}.chart-output{margin-top:12px;font:12px/1.5 Arial,sans-serif;color:var(--muted)}.chart-output ol{list-style:none;padding:0;margin:8px 0 0}.chart-output li{margin:5px 0;overflow-wrap:anywhere}.chart-output meter{width:100%;height:8px;display:block;accent-color:var(--green)}.chart-pie{width:100px;aspect-ratio:1;border-radius:50%;margin:10px auto}.chart-key{display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:2px}
+.results-panel{background:#131a1f}.results-heading,.data-table th{background:#232d35}.data-table td,.data-table th{border-color:var(--line)}.data-table tbody tr:nth-child(even){background:#1a2228}.data-table{font-size:12px}.data-table td.numeric{text-align:right;font-variant-numeric:tabular-nums}#result-tabs{overflow:auto;flex:none}.empty-state{color:var(--muted)}
+@media(max-width:1100px){.execution-toolbar kbd{display:none}.work-area{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}}
+@media(max-width:760px){.work-area{display:flex}.editor-panel{height:310px!important;flex:none}.chart-panel{order:3;border-left:0;border-top:1px solid var(--line);min-height:200px;max-height:440px}.results-panel{order:2}}
+
+/* Keep result columns at their content-derived widths. */
+.data-table{min-width:0;width:auto}.data-table th{min-width:0}.data-table th,.data-table td{padding:6px 10px}.data-table th small{overflow:hidden;text-overflow:ellipsis}.results-panel{min-width:0}
