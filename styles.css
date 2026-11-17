@@ -67,3 +67,5 @@ button.table-link{font-size:12px}button.table-link.selected{background:#243a3b}b
 #tables summary:before{content:'';height:12px;background:currentColor;clip-path:polygon(35% 20%,75% 50%,35% 80%);width:12px}
 #tables details[open]>summary:before{content:'';clip-path:polygon(20% 35%,80% 35%,50% 75%)}
 #sidebar{grid-template-columns:minmax(0,1fr)}.explorer,.object-panel,#object-info,#tables{min-width:0;max-width:100%}#tables .tree-item{white-space:normal;overflow-wrap:anywhere}.inspector-grid{max-width:100%}.inspector-grid th:first-child{width:46%}.inspector-grid th:last-child{width:18%}
+
+.db-symbol,.db-symbol svg{width:14px;height:14px;min-width:14px;max-width:14px;min-height:14px;max-height:14px;flex:0 0 14px}
