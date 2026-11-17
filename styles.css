@@ -30,3 +30,40 @@ button.table-link{font-size:12px}button.table-link.selected{background:#243a3b}b
 .data-table{min-width:0;width:auto}.data-table th{min-width:0}.data-table th,.data-table td{padding:6px 10px}.data-table th small{overflow:hidden;text-overflow:ellipsis}.results-panel{min-width:0}
 
 .tree-branch{margin-left:12px;border-left:1px solid var(--line)}#tables>.tree-branch{margin-left:0;border:0}.tree-branch summary{cursor:pointer;padding:4px 4px;color:var(--muted);font:11px var(--mono)}.tree-branch summary::marker{color:#91a7ad}.tree-branch summary .table-link{display:inline-flex;width:auto;padding:2px 6px;vertical-align:middle}.tree-item{display:block;width:100%;border:0;background:none;text-align:left;white-space:normal;overflow-wrap:anywhere;padding:4px 8px;color:var(--text);font:11px var(--mono)}.tree-item.selected{background:#243a3b;color:var(--green)}.tree-note{padding:4px 8px;color:var(--muted);font:10px var(--mono)}
+
+/* One shared row geometry for disclosure, icon and label. */
+#tables .tree-branch{margin:0 0 0 14px;border-left:1px solid #35434b;padding-left:8px}
+#tables>.tree-branch{margin:0;padding:0;border:0}
+#tables .tree-branch>summary{display:flex;align-items:center;gap:5px;height:25px;padding:0;list-style:none;position:relative;white-space:nowrap;font:11px var(--mono)}
+#tables summary::-webkit-details-marker{display:none}
+#tables summary:before{content:'▸';width:12px;flex:none;text-align:center;color:var(--muted)}
+#tables details[open]>summary:before{content:'▾'}
+#tables .tree-branch .tree-branch>summary:after{content:'';position:absolute;left:-9px;top:12px;width:8px;border-top:1px solid #35434b}
+#tables summary .table-link{display:inline-flex;flex:1;min-width:0;width:auto;margin:0;padding:2px 4px;font-weight:400;line-height:19px}
+#tables .tree-item{padding:3px 4px 3px 16px;line-height:19px}
+.object-facts{background:none;padding:0;gap:0}.object-facts div{padding:5px 0;border-bottom:1px solid var(--line)}
+.inspector-grid{width:100%;border-collapse:collapse;table-layout:fixed;font:10px var(--mono)}
+.inspector-grid th{text-align:left;color:var(--muted);font:10px Arial;padding:6px 2px;border-bottom:1px solid var(--line)}
+.inspector-grid th:first-child{width:47%}.inspector-grid th:last-child{width:19%}
+.inspector-grid td{padding:6px 2px;vertical-align:top;border-bottom:1px solid var(--line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.inspector-grid small{display:block;color:var(--muted);font:9px Arial;margin-top:3px}
+.inspector-grid .key-tag{border:0;padding:0;margin:0 3px 0 0}
+.object-title{padding:9px 0}.object-note{margin-bottom:6px}
+
+/* Instrument icon family: cool outlines, copper primary keys, teal linked keys. */
+.db-symbol{display:inline-flex;width:14px;height:14px;flex:0 0 14px;vertical-align:-2px;color:#95abb8}
+.db-symbol svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
+.symbol-pk{color:#d9ac7d}.symbol-pk svg{fill:#d9ac7d;stroke:#d9ac7d;stroke-width:.8}
+.symbol-fk,.symbol-relationship{color:#79cbbb}.symbol-database{color:#a9c3cd}
+.key-symbols{display:inline-flex;gap:3px;flex:none;margin-left:auto}
+#tables .tree-item{display:flex;align-items:center;gap:5px;min-width:0;white-space:nowrap}
+#tables .table-link .db-symbol{margin-right:5px}
+#tables .node-label{overflow:hidden;text-overflow:ellipsis}
+.inspector-grid .db-symbol{margin-right:3px;width:12px;height:12px;vertical-align:-2px}
+.inspector-grid small{margin-left:16px}
+.inspector-grid .key-symbols{margin:0;gap:1px}
+.object-title{gap:5px}.object-title h3{flex:1;min-width:0}
+.relationship button .db-symbol{margin-right:4px}
+#tables summary:before{content:'';height:12px;background:currentColor;clip-path:polygon(35% 20%,75% 50%,35% 80%);width:12px}
+#tables details[open]>summary:before{content:'';clip-path:polygon(20% 35%,80% 35%,50% 75%)}
+#sidebar{grid-template-columns:minmax(0,1fr)}.explorer,.object-panel,#object-info,#tables{min-width:0;max-width:100%}#tables .tree-item{white-space:normal;overflow-wrap:anywhere}.inspector-grid{max-width:100%}.inspector-grid th:first-child{width:46%}.inspector-grid th:last-child{width:18%}
