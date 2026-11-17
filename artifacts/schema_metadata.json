@@ -1,0 +1,3825 @@
+{
+  "store_region": {
+    "columns": [
+      {
+        "name": "region_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "region_name",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "regional_office_city",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "description",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "region_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "region_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_region (\nregion_id TINYINT PRIMARY KEY CHECK (region_id>=0),\nregion_name VARCHAR(60) NOT NULL UNIQUE,\nregional_office_city VARCHAR(60) NOT NULL,\ndescription VARCHAR(255) NULL\n)"
+  },
+  "store": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "region_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_number",
+        "mysql_type": "CHAR(4)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_name",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "street_address",
+        "mysql_type": "VARCHAR(120)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "city",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "state_code",
+        "mysql_type": "CHAR(2)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "postal_code",
+        "mysql_type": "CHAR(5)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "phone",
+        "mysql_type": "VARCHAR(20)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "opened_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "square_feet",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_active",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_store_region",
+        "columns": [
+          "region_id"
+        ],
+        "parent": "store_region",
+        "parent_columns": [
+          "region_id"
+        ],
+        "original": "CONSTRAINT fk_store_region FOREIGN KEY (region_id)\n        REFERENCES store_region (region_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "store_number"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_store_square_feet CHECK (square_feet BETWEEN 5000 AND 200000)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store (\nstore_id SMALLINT PRIMARY KEY CHECK (store_id>=0),\nregion_id TINYINT NOT NULL CHECK (region_id>=0),\nstore_number CHAR(4) NOT NULL UNIQUE,\nstore_name VARCHAR(100) NOT NULL,\nstreet_address VARCHAR(120) NOT NULL,\ncity VARCHAR(60) NOT NULL,\nstate_code CHAR(2) NOT NULL DEFAULT 'KY',\npostal_code CHAR(5) NOT NULL,\nphone VARCHAR(20) NOT NULL,\nopened_date DATE NOT NULL,\nsquare_feet INT NOT NULL CHECK (square_feet>=0),\nis_active TINYINT NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),\nCONSTRAINT chk_store_square_feet CHECK (square_feet BETWEEN 5000 AND 200000),\nCONSTRAINT fk_store_region FOREIGN KEY (region_id)\n        REFERENCES store_region (region_id)\n)"
+  },
+  "department": {
+    "columns": [
+      {
+        "name": "department_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "department_name",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "description",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "department_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "department_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE department (\ndepartment_id TINYINT PRIMARY KEY CHECK (department_id>=0),\ndepartment_name VARCHAR(60) NOT NULL UNIQUE,\ndescription VARCHAR(255) NULL\n)"
+  },
+  "job_role": {
+    "columns": [
+      {
+        "name": "job_role_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "role_name",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "minimum_hourly_rate",
+        "mysql_type": "DECIMAL(6,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "maximum_hourly_rate",
+        "mysql_type": "DECIMAL(6,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_management",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "job_role_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "role_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_job_role_rates CHECK (\n        minimum_hourly_rate > 0 AND maximum_hourly_rate >= minimum_hourly_rate\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE job_role (\njob_role_id TINYINT PRIMARY KEY CHECK (job_role_id>=0),\nrole_name VARCHAR(60) NOT NULL UNIQUE,\nminimum_hourly_rate DECIMAL(6,2) NOT NULL,\nmaximum_hourly_rate DECIMAL(6,2) NOT NULL,\nis_management TINYINT NOT NULL DEFAULT 0 CHECK (is_management IN (0,1)),\nCONSTRAINT chk_job_role_rates CHECK (\n        minimum_hourly_rate > 0 AND maximum_hourly_rate >= minimum_hourly_rate\n    )\n)"
+  },
+  "employee": {
+    "columns": [
+      {
+        "name": "employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "job_role_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "department_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "manager_employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "first_name",
+        "mysql_type": "VARCHAR(50)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "last_name",
+        "mysql_type": "VARCHAR(50)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "hire_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "hourly_rate",
+        "mysql_type": "DECIMAL(6,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "email",
+        "mysql_type": "VARCHAR(120)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "employment_status",
+        "mysql_type": "ENUM('ACTIVE', 'LEAVE', 'FORMER')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "employee_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_employee_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_employee_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_employee_job_role",
+        "columns": [
+          "job_role_id"
+        ],
+        "parent": "job_role",
+        "parent_columns": [
+          "job_role_id"
+        ],
+        "original": "CONSTRAINT fk_employee_job_role FOREIGN KEY (job_role_id)\n        REFERENCES job_role (job_role_id)"
+      },
+      {
+        "name": "fk_employee_department",
+        "columns": [
+          "department_id"
+        ],
+        "parent": "department",
+        "parent_columns": [
+          "department_id"
+        ],
+        "original": "CONSTRAINT fk_employee_department FOREIGN KEY (department_id)\n        REFERENCES department (department_id)"
+      },
+      {
+        "name": "fk_employee_manager",
+        "columns": [
+          "manager_employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_employee_manager FOREIGN KEY (manager_employee_id)\n        REFERENCES employee (employee_id)\n        ON DELETE SET NULL"
+      }
+    ],
+    "unique_keys": [
+      [
+        "email"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_employee_rate CHECK (hourly_rate > 0)"
+    ],
+    "omitted_physical_constraints": [
+      "CONSTRAINT fk_employee_manager FOREIGN KEY (manager_employee_id)\n        REFERENCES employee (employee_id)\n        ON DELETE SET NULL"
+    ],
+    "ddl": "CREATE TABLE employee (\nemployee_id INT PRIMARY KEY CHECK (employee_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\njob_role_id TINYINT NOT NULL CHECK (job_role_id>=0),\ndepartment_id TINYINT NULL CHECK (department_id>=0),\nmanager_employee_id INT NULL CHECK (manager_employee_id>=0),\nfirst_name VARCHAR(50) NOT NULL,\nlast_name VARCHAR(50) NOT NULL,\nhire_date DATE NOT NULL,\nhourly_rate DECIMAL(6,2) NOT NULL,\nemail VARCHAR(120) NOT NULL UNIQUE,\nemployment_status VARCHAR NOT NULL DEFAULT 'ACTIVE' CHECK (employment_status IN ('ACTIVE', 'LEAVE', 'FORMER')),\nCONSTRAINT chk_employee_rate CHECK (hourly_rate > 0),\nCONSTRAINT fk_employee_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id),\nCONSTRAINT fk_employee_job_role FOREIGN KEY (job_role_id)\n        REFERENCES job_role (job_role_id),\nCONSTRAINT fk_employee_department FOREIGN KEY (department_id)\n        REFERENCES department (department_id)\n)"
+  },
+  "category": {
+    "columns": [
+      {
+        "name": "category_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "department_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "category_name",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "shelf_life_class",
+        "mysql_type": "ENUM('PERISHABLE', 'SEMI_PERISHABLE', 'SHELF_STABLE')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "category_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_category_department",
+        "columns": [
+          "department_id"
+        ],
+        "parent": "department",
+        "parent_columns": [
+          "department_id"
+        ],
+        "original": "CONSTRAINT fk_category_department FOREIGN KEY (department_id)\n        REFERENCES department (department_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "category_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE category (\ncategory_id TINYINT PRIMARY KEY CHECK (category_id>=0),\ndepartment_id TINYINT NOT NULL CHECK (department_id>=0),\ncategory_name VARCHAR(60) NOT NULL UNIQUE,\nshelf_life_class VARCHAR NOT NULL CHECK (shelf_life_class IN ('PERISHABLE', 'SEMI_PERISHABLE', 'SHELF_STABLE')),\nCONSTRAINT fk_category_department FOREIGN KEY (department_id)\n        REFERENCES department (department_id)\n)"
+  },
+  "brand": {
+    "columns": [
+      {
+        "name": "brand_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "brand_name",
+        "mysql_type": "VARCHAR(80)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "brand_tagline",
+        "mysql_type": "VARCHAR(160)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "home_city",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "home_state_code",
+        "mysql_type": "CHAR(2)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_store_brand",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "brand_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "brand_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE brand (\nbrand_id SMALLINT PRIMARY KEY CHECK (brand_id>=0),\nbrand_name VARCHAR(80) NOT NULL UNIQUE,\nbrand_tagline VARCHAR(160) NULL,\nhome_city VARCHAR(60) NOT NULL,\nhome_state_code CHAR(2) NOT NULL,\nis_store_brand TINYINT NOT NULL DEFAULT 0 CHECK (is_store_brand IN (0,1))\n)"
+  },
+  "product": {
+    "columns": [
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "brand_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "category_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sku",
+        "mysql_type": "VARCHAR(20)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "upc",
+        "mysql_type": "CHAR(12)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_name",
+        "mysql_type": "VARCHAR(120)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "package_size",
+        "mysql_type": "VARCHAR(40)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "unit_of_measure",
+        "mysql_type": "ENUM('EACH', 'OUNCE', 'POUND', 'FLUID_OUNCE', 'COUNT')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "list_price",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "unit_cost",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_active",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "introduced_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_type",
+        "mysql_type": "ENUM('RESALE','INGREDIENT','PACKAGING','PREPARED','BAR')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tax_rate",
+        "mysql_type": "DECIMAL(5,4)",
+        "scale": 4,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_sellable",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "food_period",
+        "mysql_type": "ENUM('ALL','BREAKFAST','LUNCH')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "product_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_product_brand",
+        "columns": [
+          "brand_id"
+        ],
+        "parent": "brand",
+        "parent_columns": [
+          "brand_id"
+        ],
+        "original": "CONSTRAINT fk_product_brand FOREIGN KEY (brand_id)\n        REFERENCES brand (brand_id)"
+      },
+      {
+        "name": "fk_product_category",
+        "columns": [
+          "category_id"
+        ],
+        "parent": "category",
+        "parent_columns": [
+          "category_id"
+        ],
+        "original": "CONSTRAINT fk_product_category FOREIGN KEY (category_id)\n        REFERENCES category (category_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "sku"
+      ],
+      [
+        "upc"
+      ],
+      [
+        "brand_id",
+        "product_name",
+        "package_size"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_product_tax CHECK (tax_rate IN (0,0.06))",
+      "CONSTRAINT chk_product_prices CHECK (\n        list_price >= 0 AND unit_cost >= 0 AND list_price >= unit_cost\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE product (\nproduct_id INT PRIMARY KEY CHECK (product_id>=0),\nbrand_id SMALLINT NOT NULL CHECK (brand_id>=0),\ncategory_id TINYINT NOT NULL CHECK (category_id>=0),\nsku VARCHAR(20) NOT NULL UNIQUE,\nupc CHAR(12) NOT NULL UNIQUE,\nproduct_name VARCHAR(120) NOT NULL,\npackage_size VARCHAR(40) NOT NULL,\nunit_of_measure VARCHAR NOT NULL CHECK (unit_of_measure IN ('EACH', 'OUNCE', 'POUND', 'FLUID_OUNCE', 'COUNT')),\nlist_price DECIMAL(8,2) NOT NULL,\nunit_cost DECIMAL(8,2) NOT NULL,\nis_active TINYINT NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),\nintroduced_date DATE NOT NULL,\nproduct_type VARCHAR NOT NULL DEFAULT 'RESALE' CHECK (product_type IN ('RESALE','INGREDIENT','PACKAGING','PREPARED','BAR')),\ntax_rate DECIMAL(5,4) NOT NULL DEFAULT 0,\nis_sellable TINYINT NOT NULL DEFAULT 1 CHECK (is_sellable IN (0,1)),\nfood_period VARCHAR NOT NULL DEFAULT 'ALL' CHECK (food_period IN ('ALL','BREAKFAST','LUNCH')),\nCONSTRAINT chk_product_tax CHECK (tax_rate IN (0,0.06)),\nCONSTRAINT uq_product_brand_name_size UNIQUE (brand_id, product_name, package_size),\nCONSTRAINT chk_product_prices CHECK (\n        list_price >= 0 AND unit_cost >= 0 AND list_price >= unit_cost\n    ),\nCONSTRAINT fk_product_brand FOREIGN KEY (brand_id)\n        REFERENCES brand (brand_id),\nCONSTRAINT fk_product_category FOREIGN KEY (category_id)\n        REFERENCES category (category_id)\n)"
+  },
+  "supplier": {
+    "columns": [
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_name",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "contact_name",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "phone",
+        "mysql_type": "VARCHAR(20)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "email",
+        "mysql_type": "VARCHAR(120)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "city",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "state_code",
+        "mysql_type": "CHAR(2)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "lead_time_days",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_rating",
+        "mysql_type": "DECIMAL(3,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_active",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "supplier_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "supplier_name"
+      ],
+      [
+        "email"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_supplier_lead_time CHECK (lead_time_days BETWEEN 1 AND 60)",
+      "CONSTRAINT chk_supplier_rating CHECK (supplier_rating BETWEEN 1.00 AND 5.00)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE supplier (\nsupplier_id SMALLINT PRIMARY KEY CHECK (supplier_id>=0),\nsupplier_name VARCHAR(100) NOT NULL UNIQUE,\ncontact_name VARCHAR(100) NOT NULL,\nphone VARCHAR(20) NOT NULL,\nemail VARCHAR(120) NOT NULL UNIQUE,\ncity VARCHAR(60) NOT NULL,\nstate_code CHAR(2) NOT NULL,\nlead_time_days TINYINT NOT NULL CHECK (lead_time_days>=0),\nsupplier_rating DECIMAL(3,2) NOT NULL,\nis_active TINYINT NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),\nCONSTRAINT chk_supplier_lead_time CHECK (lead_time_days BETWEEN 1 AND 60),\nCONSTRAINT chk_supplier_rating CHECK (supplier_rating BETWEEN 1.00 AND 5.00)\n)"
+  },
+  "product_supplier": {
+    "columns": [
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_product_code",
+        "mysql_type": "VARCHAR(30)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "wholesale_cost",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "is_primary_supplier",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "minimum_order_quantity",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "product_id",
+      "supplier_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_product_supplier_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_product_supplier_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)"
+      },
+      {
+        "name": "fk_product_supplier_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "parent": "supplier",
+        "parent_columns": [
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_product_supplier_supplier FOREIGN KEY (supplier_id)\n        REFERENCES supplier (supplier_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "supplier_id",
+        "supplier_product_code"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_product_supplier_cost CHECK (wholesale_cost >= 0)",
+      "CONSTRAINT chk_product_supplier_moq CHECK (minimum_order_quantity > 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE product_supplier (\nproduct_id INT NOT NULL CHECK (product_id>=0),\nsupplier_id SMALLINT NOT NULL CHECK (supplier_id>=0),\nsupplier_product_code VARCHAR(30) NOT NULL,\nwholesale_cost DECIMAL(8,2) NOT NULL,\nis_primary_supplier TINYINT NOT NULL DEFAULT 0 CHECK (is_primary_supplier IN (0,1)),\nminimum_order_quantity SMALLINT NOT NULL DEFAULT 1 CHECK (minimum_order_quantity>=0),\nPRIMARY KEY (product_id, supplier_id),\nUNIQUE (supplier_id, supplier_product_code),\nCONSTRAINT chk_product_supplier_cost CHECK (wholesale_cost >= 0),\nCONSTRAINT chk_product_supplier_moq CHECK (minimum_order_quantity > 0),\nCONSTRAINT fk_product_supplier_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id),\nCONSTRAINT fk_product_supplier_supplier FOREIGN KEY (supplier_id)\n        REFERENCES supplier (supplier_id)\n)"
+  },
+  "store_inventory": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_on_hand",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "inventory_value",
+        "mysql_type": "DECIMAL(14,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reorder_point",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reorder_quantity",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "shelf_location",
+        "mysql_type": "VARCHAR(20)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "last_counted_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "product_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_inventory_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_inventory_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_inventory_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_inventory_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_inventory_value CHECK (inventory_value >= 0)",
+      "CONSTRAINT chk_inventory_levels CHECK (\n        reorder_quantity > 0 AND reorder_point >= 0\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_inventory (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nquantity_on_hand INT NOT NULL DEFAULT 0 CHECK (quantity_on_hand>=0),\ninventory_value DECIMAL(14,2) NOT NULL DEFAULT 0,\nCONSTRAINT chk_inventory_value CHECK (inventory_value >= 0),\nreorder_point INT NOT NULL CHECK (reorder_point>=0),\nreorder_quantity INT NOT NULL CHECK (reorder_quantity>=0),\nshelf_location VARCHAR(20) NOT NULL,\nlast_counted_at TIMESTAMP NOT NULL,\nPRIMARY KEY (store_id, product_id),\nCONSTRAINT chk_inventory_levels CHECK (\n        reorder_quantity > 0 AND reorder_point >= 0\n    ),\nCONSTRAINT fk_inventory_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id),\nCONSTRAINT fk_inventory_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)\n)"
+  },
+  "customer": {
+    "columns": [
+      {
+        "name": "customer_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "first_name",
+        "mysql_type": "VARCHAR(50)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "last_name",
+        "mysql_type": "VARCHAR(50)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "email",
+        "mysql_type": "VARCHAR(120)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "phone",
+        "mysql_type": "VARCHAR(20)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "city",
+        "mysql_type": "VARCHAR(60)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "state_code",
+        "mysql_type": "CHAR(2)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "postal_code",
+        "mysql_type": "CHAR(5)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "birth_year",
+        "mysql_type": "YEAR",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "created_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "marketing_opt_in",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "customer_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "email"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_customer_birth_year CHECK (birth_year IS NULL OR birth_year BETWEEN 1920 AND 2010)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE customer (\ncustomer_id INT PRIMARY KEY CHECK (customer_id>=0),\nfirst_name VARCHAR(50) NOT NULL,\nlast_name VARCHAR(50) NOT NULL,\nemail VARCHAR(120) NULL UNIQUE,\nphone VARCHAR(20) NULL,\ncity VARCHAR(60) NOT NULL,\nstate_code CHAR(2) NOT NULL DEFAULT 'KY',\npostal_code CHAR(5) NOT NULL,\nbirth_year SMALLINT NULL,\ncreated_at TIMESTAMP NOT NULL,\nmarketing_opt_in TINYINT NOT NULL DEFAULT 0 CHECK (marketing_opt_in IN (0,1)),\nCONSTRAINT chk_customer_birth_year CHECK (birth_year IS NULL OR birth_year BETWEEN 1920 AND 2010)\n)"
+  },
+  "loyalty_account": {
+    "columns": [
+      {
+        "name": "loyalty_account_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "customer_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "loyalty_number",
+        "mysql_type": "CHAR(10)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "joined_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "points_balance",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tier",
+        "mysql_type": "ENUM('SPROUT', 'SAPLING', 'MIGHTY_OAK')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "loyalty_account_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_loyalty_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "parent": "customer",
+        "parent_columns": [
+          "customer_id"
+        ],
+        "original": "CONSTRAINT fk_loyalty_customer FOREIGN KEY (customer_id)\n        REFERENCES customer (customer_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "customer_id"
+      ],
+      [
+        "loyalty_number"
+      ]
+    ],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE loyalty_account (\nloyalty_account_id INT PRIMARY KEY CHECK (loyalty_account_id>=0),\ncustomer_id INT NOT NULL UNIQUE CHECK (customer_id>=0),\nloyalty_number CHAR(10) NOT NULL UNIQUE,\njoined_date DATE NOT NULL,\npoints_balance INT NOT NULL DEFAULT 0 CHECK (points_balance>=0),\ntier VARCHAR NOT NULL DEFAULT 'SPROUT' CHECK (tier IN ('SPROUT', 'SAPLING', 'MIGHTY_OAK')),\nCONSTRAINT fk_loyalty_customer FOREIGN KEY (customer_id)\n        REFERENCES customer (customer_id)\n)"
+  },
+  "payment_method": {
+    "columns": [
+      {
+        "name": "payment_method_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "method_name",
+        "mysql_type": "VARCHAR(40)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "processing_fee_rate",
+        "mysql_type": "DECIMAL(5,4)",
+        "scale": 4,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "payment_method_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "method_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_payment_fee CHECK (processing_fee_rate BETWEEN 0 AND 0.1000)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE payment_method (\npayment_method_id TINYINT PRIMARY KEY CHECK (payment_method_id>=0),\nmethod_name VARCHAR(40) NOT NULL UNIQUE,\nprocessing_fee_rate DECIMAL(5,4) NOT NULL DEFAULT 0,\nCONSTRAINT chk_payment_fee CHECK (processing_fee_rate BETWEEN 0 AND 0.1000)\n)"
+  },
+  "sale": {
+    "columns": [
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "customer_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sold_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "trading_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "purchase_occasion",
+        "mysql_type": "ENUM('BREAKFAST','LUNCH','TOP_UP','WEEKLY','DINNER','BAR')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_status",
+        "mysql_type": "ENUM('COMPLETED', 'RETURNED', 'VOIDED')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "subtotal",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "discount_total",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tax_total",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "grand_total",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_sale_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_sale_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_sale_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "parent": "customer",
+        "parent_columns": [
+          "customer_id"
+        ],
+        "original": "CONSTRAINT fk_sale_customer FOREIGN KEY (customer_id)\n        REFERENCES customer (customer_id)\n        ON DELETE SET NULL"
+      },
+      {
+        "name": "fk_sale_employee",
+        "columns": [
+          "employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_sale_employee FOREIGN KEY (employee_id)\n        REFERENCES employee (employee_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [
+      {
+        "name": "idx_sale_sold_at",
+        "columns": "sold_at"
+      },
+      {
+        "name": "idx_sale_store_date",
+        "columns": "store_id, sold_at"
+      },
+      {
+        "name": "idx_sale_customer",
+        "columns": "customer_id"
+      }
+    ],
+    "checks": [
+      "CONSTRAINT chk_sale_trading_date CHECK (DATE(sold_at) BETWEEN trading_date AND DATE_ADD(trading_date,INTERVAL 1 DAY))",
+      "CONSTRAINT chk_sale_totals CHECK (\n        subtotal >= 0 AND discount_total >= 0 AND tax_total >= 0 AND grand_total >= 0\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale (\nsale_id BIGINT PRIMARY KEY CHECK (sale_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\ncustomer_id INT NULL CHECK (customer_id>=0),\nemployee_id INT NOT NULL CHECK (employee_id>=0),\nsold_at TIMESTAMP NOT NULL,\ntrading_date DATE NOT NULL,\npurchase_occasion VARCHAR NOT NULL CHECK (purchase_occasion IN ('BREAKFAST','LUNCH','TOP_UP','WEEKLY','DINNER','BAR')),\nCONSTRAINT chk_sale_trading_date CHECK (DATE(sold_at) BETWEEN trading_date AND DATE_ADD(trading_date,INTERVAL 1 DAY)),\nsale_status VARCHAR NOT NULL DEFAULT 'COMPLETED' CHECK (sale_status IN ('COMPLETED', 'RETURNED', 'VOIDED')),\nsubtotal DECIMAL(10,2) NOT NULL DEFAULT 0,\ndiscount_total DECIMAL(10,2) NOT NULL DEFAULT 0,\ntax_total DECIMAL(10,2) NOT NULL DEFAULT 0,\ngrand_total DECIMAL(10,2) NOT NULL DEFAULT 0,\nCONSTRAINT chk_sale_totals CHECK (\n        subtotal >= 0 AND discount_total >= 0 AND tax_total >= 0 AND grand_total >= 0\n    ),\nCONSTRAINT fk_sale_store FOREIGN KEY (store_id)\n        REFERENCES store (store_id),\nCONSTRAINT fk_sale_customer FOREIGN KEY (customer_id)\n        REFERENCES customer (customer_id)\n        ,\nCONSTRAINT fk_sale_employee FOREIGN KEY (employee_id)\n        REFERENCES employee (employee_id)\n)"
+  },
+  "sale_item": {
+    "columns": [
+      {
+        "name": "service_channel",
+        "mysql_type": "ENUM('GROCERY','GRIDDLE','GRAB_GO','BAR')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "unit_price",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "discount_amount",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tax_amount",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "cost_amount",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_id",
+      "line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_sale_item_sale",
+        "columns": [
+          "sale_id"
+        ],
+        "parent": "sale",
+        "parent_columns": [
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_sale_item_sale FOREIGN KEY (sale_id)\n        REFERENCES sale (sale_id)\n        ON DELETE CASCADE"
+      },
+      {
+        "name": "fk_sale_item_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_sale_item_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "sale_id",
+        "product_id"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_sale_item_financial CHECK (tax_amount >= 0 AND cost_amount >= 0)",
+      "CONSTRAINT chk_sale_item_quantity CHECK (quantity > 0)",
+      "CONSTRAINT chk_sale_item_amounts CHECK (\n        unit_price >= 0 AND discount_amount >= 0\n        AND discount_amount <= unit_price * quantity\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale_item (\nservice_channel VARCHAR NOT NULL DEFAULT 'GROCERY' CHECK (service_channel IN ('GROCERY','GRIDDLE','GRAB_GO','BAR')),\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\nline_number SMALLINT NOT NULL CHECK (line_number>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nquantity SMALLINT NOT NULL CHECK (quantity>=0),\nunit_price DECIMAL(8,2) NOT NULL,\ndiscount_amount DECIMAL(8,2) NOT NULL DEFAULT 0,\ntax_amount DECIMAL(8,2) NOT NULL,\ncost_amount DECIMAL(12,2) NOT NULL,\nCONSTRAINT chk_sale_item_financial CHECK (tax_amount >= 0 AND cost_amount >= 0),\nPRIMARY KEY (sale_id, line_number),\nCONSTRAINT uq_sale_product UNIQUE (sale_id, product_id),\nCONSTRAINT chk_sale_item_quantity CHECK (quantity > 0),\nCONSTRAINT chk_sale_item_amounts CHECK (\n        unit_price >= 0 AND discount_amount >= 0\n        AND discount_amount <= unit_price * quantity\n    ),\nCONSTRAINT fk_sale_item_sale FOREIGN KEY (sale_id)\n        REFERENCES sale (sale_id)\n        ,\nCONSTRAINT fk_sale_item_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)\n)"
+  },
+  "promotion": {
+    "columns": [
+      {
+        "name": "promotion_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "promotion_name",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "promotion_description",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "start_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "end_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "discount_type",
+        "mysql_type": "ENUM('PERCENT', 'AMOUNT')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "discount_value",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "promotion_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [
+      [
+        "promotion_name"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_promotion_dates CHECK (end_date >= start_date)",
+      "CONSTRAINT chk_promotion_value CHECK (\n        discount_value > 0\n        AND (discount_type = 'AMOUNT' OR discount_value <= 100)\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE promotion (\npromotion_id SMALLINT PRIMARY KEY CHECK (promotion_id>=0),\npromotion_name VARCHAR(100) NOT NULL UNIQUE,\npromotion_description VARCHAR(255) NULL,\nstart_date DATE NOT NULL,\nend_date DATE NOT NULL,\ndiscount_type VARCHAR NOT NULL CHECK (discount_type IN ('PERCENT', 'AMOUNT')),\ndiscount_value DECIMAL(8,2) NOT NULL,\nCONSTRAINT chk_promotion_dates CHECK (end_date >= start_date),\nCONSTRAINT chk_promotion_value CHECK (\n        discount_value > 0\n        AND (discount_type = 'AMOUNT' OR discount_value <= 100)\n    )\n)"
+  },
+  "product_promotion": {
+    "columns": [
+      {
+        "name": "promotion_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "featured_display",
+        "mysql_type": "BOOLEAN",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "promotion_id",
+      "product_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_product_promotion_promotion",
+        "columns": [
+          "promotion_id"
+        ],
+        "parent": "promotion",
+        "parent_columns": [
+          "promotion_id"
+        ],
+        "original": "CONSTRAINT fk_product_promotion_promotion FOREIGN KEY (promotion_id)\n        REFERENCES promotion (promotion_id)\n        ON DELETE CASCADE"
+      },
+      {
+        "name": "fk_product_promotion_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_product_promotion_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE product_promotion (\npromotion_id SMALLINT NOT NULL CHECK (promotion_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nfeatured_display TINYINT NOT NULL DEFAULT 0 CHECK (featured_display IN (0,1)),\nPRIMARY KEY (promotion_id, product_id),\nCONSTRAINT fk_product_promotion_promotion FOREIGN KEY (promotion_id)\n        REFERENCES promotion (promotion_id)\n        ,\nCONSTRAINT fk_product_promotion_product FOREIGN KEY (product_id)\n        REFERENCES product (product_id)\n)"
+  },
+  "inventory_adjustment": {
+    "columns": [
+      {
+        "name": "adjustment_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "adjusted_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_change",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reason",
+        "mysql_type": "ENUM('DELIVERY', 'DAMAGE', 'SPOILAGE', 'COUNT_CORRECTION', 'DONATION')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "notes",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "adjustment_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_adjustment_inventory",
+        "columns": [
+          "store_id",
+          "product_id"
+        ],
+        "parent": "store_inventory",
+        "parent_columns": [
+          "store_id",
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_adjustment_inventory FOREIGN KEY (store_id, product_id)\n        REFERENCES store_inventory (store_id, product_id)"
+      },
+      {
+        "name": "fk_adjustment_employee",
+        "columns": [
+          "employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_adjustment_employee FOREIGN KEY (employee_id)\n        REFERENCES employee (employee_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_adjustment_nonzero CHECK (quantity_change <> 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE inventory_adjustment (\nadjustment_id BIGINT PRIMARY KEY CHECK (adjustment_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nemployee_id INT NOT NULL CHECK (employee_id>=0),\nadjusted_at TIMESTAMP NOT NULL,\nquantity_change SMALLINT NOT NULL,\nreason VARCHAR NOT NULL CHECK (reason IN ('DELIVERY', 'DAMAGE', 'SPOILAGE', 'COUNT_CORRECTION', 'DONATION')),\nnotes VARCHAR(255) NULL,\nCONSTRAINT chk_adjustment_nonzero CHECK (quantity_change <> 0),\nCONSTRAINT fk_adjustment_inventory FOREIGN KEY (store_id, product_id)\n        REFERENCES store_inventory (store_id, product_id),\nCONSTRAINT fk_adjustment_employee FOREIGN KEY (employee_id)\n        REFERENCES employee (employee_id)\n)"
+  },
+  "purchase_order": {
+    "columns": [
+      {
+        "name": "purchase_order_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "ordered_by_employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "ordered_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "expected_delivery_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "purchase_order_status",
+        "mysql_type": "ENUM('OPEN', 'PARTIALLY_RECEIVED', 'RECEIVED', 'CANCELLED')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "purchase_order_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_purchase_order_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_purchase_order_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_purchase_order_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "parent": "supplier",
+        "parent_columns": [
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_purchase_order_supplier FOREIGN KEY (supplier_id) REFERENCES supplier (supplier_id)"
+      },
+      {
+        "name": "fk_purchase_order_employee",
+        "columns": [
+          "ordered_by_employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_purchase_order_employee FOREIGN KEY (ordered_by_employee_id) REFERENCES employee (employee_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "purchase_order_id",
+        "supplier_id"
+      ]
+    ],
+    "indexes": [
+      {
+        "name": "idx_purchase_order_date",
+        "columns": "ordered_at"
+      }
+    ],
+    "checks": [
+      "CONSTRAINT chk_purchase_order_dates CHECK (expected_delivery_date >= DATE(ordered_at))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE purchase_order (\npurchase_order_id INT PRIMARY KEY CHECK (purchase_order_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nsupplier_id SMALLINT NOT NULL CHECK (supplier_id>=0),\nordered_by_employee_id INT NOT NULL CHECK (ordered_by_employee_id>=0),\nordered_at TIMESTAMP NOT NULL,\nexpected_delivery_date DATE NOT NULL,\npurchase_order_status VARCHAR NOT NULL CHECK (purchase_order_status IN ('OPEN', 'PARTIALLY_RECEIVED', 'RECEIVED', 'CANCELLED')),\nCONSTRAINT uq_purchase_order_supplier UNIQUE (purchase_order_id, supplier_id),\nCONSTRAINT chk_purchase_order_dates CHECK (expected_delivery_date >= DATE(ordered_at)),\nCONSTRAINT fk_purchase_order_store FOREIGN KEY (store_id) REFERENCES store (store_id),\nCONSTRAINT fk_purchase_order_supplier FOREIGN KEY (supplier_id) REFERENCES supplier (supplier_id),\nCONSTRAINT fk_purchase_order_employee FOREIGN KEY (ordered_by_employee_id) REFERENCES employee (employee_id)\n)"
+  },
+  "purchase_order_line": {
+    "columns": [
+      {
+        "name": "purchase_order_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_ordered",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "unit_cost",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "purchase_order_id",
+      "line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_po_line_order_supplier",
+        "columns": [
+          "purchase_order_id",
+          "supplier_id"
+        ],
+        "parent": "purchase_order",
+        "parent_columns": [
+          "purchase_order_id",
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_po_line_order_supplier FOREIGN KEY (purchase_order_id, supplier_id)\n        REFERENCES purchase_order (purchase_order_id, supplier_id)"
+      },
+      {
+        "name": "fk_po_line_product_supplier",
+        "columns": [
+          "product_id",
+          "supplier_id"
+        ],
+        "parent": "product_supplier",
+        "parent_columns": [
+          "product_id",
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_po_line_product_supplier FOREIGN KEY (product_id, supplier_id)\n        REFERENCES product_supplier (product_id, supplier_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "purchase_order_id",
+        "product_id"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_purchase_order_line CHECK (line_number > 0 AND quantity_ordered > 0 AND unit_cost >= 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE purchase_order_line (\npurchase_order_id INT NOT NULL CHECK (purchase_order_id>=0),\nline_number SMALLINT NOT NULL CHECK (line_number>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nsupplier_id SMALLINT NOT NULL CHECK (supplier_id>=0),\nquantity_ordered SMALLINT NOT NULL CHECK (quantity_ordered>=0),\nunit_cost DECIMAL(8,2) NOT NULL,\nPRIMARY KEY (purchase_order_id, line_number),\nCONSTRAINT uq_purchase_order_product UNIQUE (purchase_order_id, product_id),\nCONSTRAINT chk_purchase_order_line CHECK (line_number > 0 AND quantity_ordered > 0 AND unit_cost >= 0),\nCONSTRAINT fk_po_line_order_supplier FOREIGN KEY (purchase_order_id, supplier_id)\n        REFERENCES purchase_order (purchase_order_id, supplier_id),\nCONSTRAINT fk_po_line_product_supplier FOREIGN KEY (product_id, supplier_id)\n        REFERENCES product_supplier (product_id, supplier_id)\n)"
+  },
+  "receipt": {
+    "columns": [
+      {
+        "name": "receipt_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "purchase_order_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "received_by_employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "received_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "delivery_reference",
+        "mysql_type": "VARCHAR(40)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "receipt_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_receipt_purchase_order",
+        "columns": [
+          "purchase_order_id"
+        ],
+        "parent": "purchase_order",
+        "parent_columns": [
+          "purchase_order_id"
+        ],
+        "original": "CONSTRAINT fk_receipt_purchase_order FOREIGN KEY (purchase_order_id) REFERENCES purchase_order (purchase_order_id)"
+      },
+      {
+        "name": "fk_receipt_employee",
+        "columns": [
+          "received_by_employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_receipt_employee FOREIGN KEY (received_by_employee_id) REFERENCES employee (employee_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "receipt_id",
+        "purchase_order_id"
+      ],
+      [
+        "purchase_order_id",
+        "delivery_reference"
+      ]
+    ],
+    "indexes": [
+      {
+        "name": "idx_receipt_date",
+        "columns": "received_at"
+      }
+    ],
+    "checks": [],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE receipt (\nreceipt_id INT PRIMARY KEY CHECK (receipt_id>=0),\npurchase_order_id INT NOT NULL CHECK (purchase_order_id>=0),\nreceived_by_employee_id INT NOT NULL CHECK (received_by_employee_id>=0),\nreceived_at TIMESTAMP NOT NULL,\ndelivery_reference VARCHAR(40) NOT NULL,\nCONSTRAINT uq_receipt_order UNIQUE (receipt_id, purchase_order_id),\nCONSTRAINT uq_receipt_reference UNIQUE (purchase_order_id, delivery_reference),\nCONSTRAINT fk_receipt_purchase_order FOREIGN KEY (purchase_order_id) REFERENCES purchase_order (purchase_order_id),\nCONSTRAINT fk_receipt_employee FOREIGN KEY (received_by_employee_id) REFERENCES employee (employee_id)\n)"
+  },
+  "receipt_line": {
+    "columns": [
+      {
+        "name": "receipt_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "purchase_order_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "purchase_order_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_received",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "receipt_id",
+      "line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_receipt_line_header",
+        "columns": [
+          "receipt_id",
+          "purchase_order_id"
+        ],
+        "parent": "receipt",
+        "parent_columns": [
+          "receipt_id",
+          "purchase_order_id"
+        ],
+        "original": "CONSTRAINT fk_receipt_line_header FOREIGN KEY (receipt_id, purchase_order_id)\n        REFERENCES receipt (receipt_id, purchase_order_id)"
+      },
+      {
+        "name": "fk_receipt_line_order_line",
+        "columns": [
+          "purchase_order_id",
+          "purchase_order_line_number"
+        ],
+        "parent": "purchase_order_line",
+        "parent_columns": [
+          "purchase_order_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_receipt_line_order_line FOREIGN KEY (purchase_order_id, purchase_order_line_number)\n        REFERENCES purchase_order_line (purchase_order_id, line_number)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "receipt_id",
+        "purchase_order_id",
+        "purchase_order_line_number"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_receipt_line CHECK (line_number > 0 AND quantity_received > 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE receipt_line (\nreceipt_id INT NOT NULL CHECK (receipt_id>=0),\nline_number SMALLINT NOT NULL CHECK (line_number>=0),\npurchase_order_id INT NOT NULL CHECK (purchase_order_id>=0),\npurchase_order_line_number SMALLINT NOT NULL CHECK (purchase_order_line_number>=0),\nquantity_received SMALLINT NOT NULL CHECK (quantity_received>=0),\nPRIMARY KEY (receipt_id, line_number),\nCONSTRAINT uq_receipt_po_line UNIQUE (receipt_id, purchase_order_id, purchase_order_line_number),\nCONSTRAINT chk_receipt_line CHECK (line_number > 0 AND quantity_received > 0),\nCONSTRAINT fk_receipt_line_header FOREIGN KEY (receipt_id, purchase_order_id)\n        REFERENCES receipt (receipt_id, purchase_order_id),\nCONSTRAINT fk_receipt_line_order_line FOREIGN KEY (purchase_order_id, purchase_order_line_number)\n        REFERENCES purchase_order_line (purchase_order_id, line_number)\n)"
+  },
+  "sale_payment": {
+    "columns": [
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "payment_sequence",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "payment_method_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_id",
+      "payment_sequence"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_sale_payment_sale",
+        "columns": [
+          "sale_id"
+        ],
+        "parent": "sale",
+        "parent_columns": [
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_sale_payment_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id) ON DELETE CASCADE"
+      },
+      {
+        "name": "fk_sale_payment_method",
+        "columns": [
+          "payment_method_id"
+        ],
+        "parent": "payment_method",
+        "parent_columns": [
+          "payment_method_id"
+        ],
+        "original": "CONSTRAINT fk_sale_payment_method FOREIGN KEY (payment_method_id) REFERENCES payment_method (payment_method_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_sale_payment CHECK (payment_sequence > 0 AND amount > 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale_payment (\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\npayment_sequence SMALLINT NOT NULL CHECK (payment_sequence>=0),\npayment_method_id TINYINT NOT NULL CHECK (payment_method_id>=0),\namount DECIMAL(10,2) NOT NULL,\nPRIMARY KEY (sale_id, payment_sequence),\nCONSTRAINT chk_sale_payment CHECK (payment_sequence > 0 AND amount > 0),\nCONSTRAINT fk_sale_payment_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id) ,\nCONSTRAINT fk_sale_payment_method FOREIGN KEY (payment_method_id) REFERENCES payment_method (payment_method_id)\n)"
+  },
+  "product_price_history": {
+    "columns": [
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "effective_start_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "list_price",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "product_id",
+      "effective_start_date"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_price_history_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_price_history_product FOREIGN KEY (product_id) REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_price_history CHECK (list_price >= 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE product_price_history (\nproduct_id INT NOT NULL CHECK (product_id>=0),\neffective_start_date DATE NOT NULL,\nlist_price DECIMAL(8,2) NOT NULL,\nPRIMARY KEY (product_id, effective_start_date),\nCONSTRAINT chk_price_history CHECK (list_price >= 0),\nCONSTRAINT fk_price_history_product FOREIGN KEY (product_id) REFERENCES product (product_id)\n)"
+  },
+  "loyalty_transaction": {
+    "columns": [
+      {
+        "name": "loyalty_transaction_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "loyalty_account_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "transacted_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "transaction_type",
+        "mysql_type": "ENUM('EARN', 'REDEEM', 'ADJUST', 'EXPIRE')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "points_change",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "notes",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "loyalty_transaction_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_loyalty_transaction_account",
+        "columns": [
+          "loyalty_account_id"
+        ],
+        "parent": "loyalty_account",
+        "parent_columns": [
+          "loyalty_account_id"
+        ],
+        "original": "CONSTRAINT fk_loyalty_transaction_account FOREIGN KEY (loyalty_account_id) REFERENCES loyalty_account (loyalty_account_id)"
+      },
+      {
+        "name": "fk_loyalty_transaction_sale",
+        "columns": [
+          "sale_id"
+        ],
+        "parent": "sale",
+        "parent_columns": [
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_loyalty_transaction_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [
+      {
+        "name": "idx_loyalty_transaction_date",
+        "columns": "loyalty_account_id, transacted_at, loyalty_transaction_id"
+      }
+    ],
+    "checks": [
+      "CONSTRAINT chk_loyalty_points CHECK (\n        points_change <> 0 AND (\n            (transaction_type = 'EARN' AND points_change > 0)\n            OR (transaction_type IN ('REDEEM', 'EXPIRE') AND points_change < 0)\n            OR transaction_type = 'ADJUST'\n        )\n    )"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE loyalty_transaction (\nloyalty_transaction_id INT PRIMARY KEY CHECK (loyalty_transaction_id>=0),\nloyalty_account_id INT NOT NULL CHECK (loyalty_account_id>=0),\nsale_id BIGINT NULL CHECK (sale_id>=0),\ntransacted_at TIMESTAMP NOT NULL,\ntransaction_type VARCHAR NOT NULL CHECK (transaction_type IN ('EARN', 'REDEEM', 'ADJUST', 'EXPIRE')),\npoints_change INT NOT NULL,\nnotes VARCHAR(255) NULL,\nCONSTRAINT chk_loyalty_points CHECK (\n        points_change <> 0 AND (\n            (transaction_type = 'EARN' AND points_change > 0)\n            OR (transaction_type IN ('REDEEM', 'EXPIRE') AND points_change < 0)\n            OR transaction_type = 'ADJUST'\n        )\n    ),\nCONSTRAINT fk_loyalty_transaction_account FOREIGN KEY (loyalty_account_id) REFERENCES loyalty_account (loyalty_account_id),\nCONSTRAINT fk_loyalty_transaction_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id)\n)"
+  },
+  "product_supplier_cost_history": {
+    "columns": [
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "effective_start_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "wholesale_cost",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "product_id",
+      "supplier_id",
+      "effective_start_date"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_cost_history_product_supplier",
+        "columns": [
+          "product_id",
+          "supplier_id"
+        ],
+        "parent": "product_supplier",
+        "parent_columns": [
+          "product_id",
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_cost_history_product_supplier FOREIGN KEY (product_id, supplier_id)\n        REFERENCES product_supplier (product_id, supplier_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_supplier_cost_history CHECK (wholesale_cost >= 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE product_supplier_cost_history (\nproduct_id INT NOT NULL CHECK (product_id>=0),\nsupplier_id SMALLINT NOT NULL CHECK (supplier_id>=0),\neffective_start_date DATE NOT NULL,\nwholesale_cost DECIMAL(8,2) NOT NULL,\nPRIMARY KEY (product_id, supplier_id, effective_start_date),\nCONSTRAINT chk_supplier_cost_history CHECK (wholesale_cost >= 0),\nCONSTRAINT fk_cost_history_product_supplier FOREIGN KEY (product_id, supplier_id)\n        REFERENCES product_supplier (product_id, supplier_id)\n)"
+  },
+  "inventory_opening": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "opened_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "inventory_value",
+        "mysql_type": "DECIMAL(14,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "product_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_opening_inventory",
+        "columns": [
+          "store_id",
+          "product_id"
+        ],
+        "parent": "store_inventory",
+        "parent_columns": [
+          "store_id",
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_opening_inventory FOREIGN KEY (store_id, product_id)\n        REFERENCES store_inventory (store_id, product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_opening_value CHECK (inventory_value >= 0 AND (quantity > 0 OR inventory_value = 0))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE inventory_opening (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nopened_at TIMESTAMP NOT NULL,\nquantity INT NOT NULL CHECK (quantity>=0),\ninventory_value DECIMAL(14,2) NOT NULL,\nPRIMARY KEY (store_id, product_id),\nCONSTRAINT chk_opening_value CHECK (inventory_value >= 0 AND (quantity > 0 OR inventory_value = 0)),\nCONSTRAINT fk_opening_inventory FOREIGN KEY (store_id, product_id)\n        REFERENCES store_inventory (store_id, product_id)\n)"
+  },
+  "sale_return": {
+    "columns": [
+      {
+        "name": "sale_return_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "employee_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "returned_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reason",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "net_amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tax_amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "refund_total",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_return_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_return_sale",
+        "columns": [
+          "sale_id"
+        ],
+        "parent": "sale",
+        "parent_columns": [
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_return_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id)"
+      },
+      {
+        "name": "fk_return_employee",
+        "columns": [
+          "employee_id"
+        ],
+        "parent": "employee",
+        "parent_columns": [
+          "employee_id"
+        ],
+        "original": "CONSTRAINT fk_return_employee FOREIGN KEY (employee_id) REFERENCES employee (employee_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "sale_return_id",
+        "sale_id"
+      ]
+    ],
+    "indexes": [
+      {
+        "name": "idx_return_date",
+        "columns": "returned_at"
+      }
+    ],
+    "checks": [
+      "CONSTRAINT chk_return_total CHECK (net_amount > 0 AND tax_amount >= 0 AND refund_total = net_amount + tax_amount)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale_return (\nsale_return_id BIGINT PRIMARY KEY CHECK (sale_return_id>=0),\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\nemployee_id INT NOT NULL CHECK (employee_id>=0),\nreturned_at TIMESTAMP NOT NULL,\nreason VARCHAR(100) NOT NULL,\nnet_amount DECIMAL(10,2) NOT NULL,\ntax_amount DECIMAL(10,2) NOT NULL,\nrefund_total DECIMAL(10,2) NOT NULL,\nCONSTRAINT uq_return_sale UNIQUE (sale_return_id, sale_id),\nCONSTRAINT chk_return_total CHECK (net_amount > 0 AND tax_amount >= 0 AND refund_total = net_amount + tax_amount),\nCONSTRAINT fk_return_sale FOREIGN KEY (sale_id) REFERENCES sale (sale_id),\nCONSTRAINT fk_return_employee FOREIGN KEY (employee_id) REFERENCES employee (employee_id)\n)"
+  },
+  "sale_return_item": {
+    "columns": [
+      {
+        "name": "sale_return_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "net_amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "tax_amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "cost_amount",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_return_id",
+      "line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_return_item_header",
+        "columns": [
+          "sale_return_id",
+          "sale_id"
+        ],
+        "parent": "sale_return",
+        "parent_columns": [
+          "sale_return_id",
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_return_item_header FOREIGN KEY (sale_return_id, sale_id) REFERENCES sale_return (sale_return_id, sale_id)"
+      },
+      {
+        "name": "fk_return_item_original",
+        "columns": [
+          "sale_id",
+          "sale_line_number"
+        ],
+        "parent": "sale_item",
+        "parent_columns": [
+          "sale_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_return_item_original FOREIGN KEY (sale_id, sale_line_number) REFERENCES sale_item (sale_id, line_number)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "sale_return_id",
+        "sale_id",
+        "sale_line_number"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_return_item CHECK (line_number > 0 AND quantity > 0 AND net_amount > 0 AND tax_amount >= 0 AND cost_amount >= 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale_return_item (\nsale_return_id BIGINT NOT NULL CHECK (sale_return_id>=0),\nline_number SMALLINT NOT NULL CHECK (line_number>=0),\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\nsale_line_number SMALLINT NOT NULL CHECK (sale_line_number>=0),\nquantity SMALLINT NOT NULL CHECK (quantity>=0),\nnet_amount DECIMAL(10,2) NOT NULL,\ntax_amount DECIMAL(10,2) NOT NULL,\ncost_amount DECIMAL(12,2) NOT NULL,\nPRIMARY KEY (sale_return_id, line_number),\nCONSTRAINT uq_return_original_line UNIQUE (sale_return_id, sale_id, sale_line_number),\nCONSTRAINT chk_return_item CHECK (line_number > 0 AND quantity > 0 AND net_amount > 0 AND tax_amount >= 0 AND cost_amount >= 0),\nCONSTRAINT fk_return_item_header FOREIGN KEY (sale_return_id, sale_id) REFERENCES sale_return (sale_return_id, sale_id),\nCONSTRAINT fk_return_item_original FOREIGN KEY (sale_id, sale_line_number) REFERENCES sale_item (sale_id, line_number)\n)"
+  },
+  "sale_refund": {
+    "columns": [
+      {
+        "name": "sale_return_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "refund_sequence",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "payment_sequence",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "refunded_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "amount",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "sale_return_id",
+      "refund_sequence"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_refund_return",
+        "columns": [
+          "sale_return_id",
+          "sale_id"
+        ],
+        "parent": "sale_return",
+        "parent_columns": [
+          "sale_return_id",
+          "sale_id"
+        ],
+        "original": "CONSTRAINT fk_refund_return FOREIGN KEY (sale_return_id, sale_id) REFERENCES sale_return (sale_return_id, sale_id)"
+      },
+      {
+        "name": "fk_refund_payment",
+        "columns": [
+          "sale_id",
+          "payment_sequence"
+        ],
+        "parent": "sale_payment",
+        "parent_columns": [
+          "sale_id",
+          "payment_sequence"
+        ],
+        "original": "CONSTRAINT fk_refund_payment FOREIGN KEY (sale_id, payment_sequence) REFERENCES sale_payment (sale_id, payment_sequence)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_refund_amount CHECK (refund_sequence > 0 AND amount > 0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE sale_refund (\nsale_return_id BIGINT NOT NULL CHECK (sale_return_id>=0),\nrefund_sequence SMALLINT NOT NULL CHECK (refund_sequence>=0),\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\npayment_sequence SMALLINT NOT NULL CHECK (payment_sequence>=0),\nrefunded_at TIMESTAMP NOT NULL,\namount DECIMAL(10,2) NOT NULL,\nPRIMARY KEY (sale_return_id, refund_sequence),\nCONSTRAINT chk_refund_amount CHECK (refund_sequence > 0 AND amount > 0),\nCONSTRAINT fk_refund_return FOREIGN KEY (sale_return_id, sale_id) REFERENCES sale_return (sale_return_id, sale_id),\nCONSTRAINT fk_refund_payment FOREIGN KEY (sale_id, payment_sequence) REFERENCES sale_payment (sale_id, payment_sequence)\n)"
+  },
+  "store_service_hours": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "service",
+        "mysql_type": "ENUM('RETAIL','GRIDDLE','KITCHEN','BAR','PACKAGE_BEER')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "weekday_number",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "opens_at",
+        "mysql_type": "TIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "closes_at",
+        "mysql_type": "TIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "close_day_offset",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "service",
+      "weekday_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_service_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_service_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_service_hours CHECK (weekday_number BETWEEN 0 AND 6 AND close_day_offset IN (0,1)\n      AND TIME_TO_SEC(opens_at)>=0 AND TIME_TO_SEC(opens_at)<86400\n      AND TIME_TO_SEC(closes_at)>=0 AND TIME_TO_SEC(closes_at)<86400\n      AND TIME_TO_SEC(closes_at)+close_day_offset*86400>TIME_TO_SEC(opens_at))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_service_hours (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nservice VARCHAR NOT NULL CHECK (service IN ('RETAIL','GRIDDLE','KITCHEN','BAR','PACKAGE_BEER')),\nweekday_number TINYINT NOT NULL CHECK (weekday_number>=0),\nopens_at TIME NOT NULL,\ncloses_at TIME NOT NULL,\nclose_day_offset TINYINT NOT NULL DEFAULT 0 CHECK (close_day_offset>=0),\nPRIMARY KEY (store_id,service,weekday_number),\nCONSTRAINT chk_service_hours CHECK (weekday_number BETWEEN 0 AND 6 AND close_day_offset IN (0,1)\n      AND EPOCH(opens_at)>=0 AND EPOCH(opens_at)<86400\n      AND EPOCH(closes_at)>=0 AND EPOCH(closes_at)<86400\n      AND EPOCH(closes_at)+close_day_offset*86400>EPOCH(opens_at)),\nCONSTRAINT fk_service_store FOREIGN KEY (store_id) REFERENCES store (store_id)\n)"
+  },
+  "store_product_price_history": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "effective_start_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "list_price",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "product_id",
+      "effective_start_date"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_store_price_inventory",
+        "columns": [
+          "store_id",
+          "product_id"
+        ],
+        "parent": "store_inventory",
+        "parent_columns": [
+          "store_id",
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_store_price_inventory FOREIGN KEY (store_id,product_id) REFERENCES store_inventory (store_id,product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_store_price CHECK (list_price>=0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_product_price_history (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\neffective_start_date DATE NOT NULL,\nlist_price DECIMAL(8,2) NOT NULL,\nPRIMARY KEY (store_id,product_id,effective_start_date),\nCONSTRAINT chk_store_price CHECK (list_price>=0),\nCONSTRAINT fk_store_price_inventory FOREIGN KEY (store_id,product_id) REFERENCES store_inventory (store_id,product_id)\n)"
+  },
+  "store_supplier": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "supplier_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "delivery_days",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "supplier_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_store_supplier_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_store_supplier_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_store_supplier_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "parent": "supplier",
+        "parent_columns": [
+          "supplier_id"
+        ],
+        "original": "CONSTRAINT fk_store_supplier_supplier FOREIGN KEY (supplier_id) REFERENCES supplier (supplier_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_delivery_days CHECK (delivery_days BETWEEN 1 AND 7)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_supplier (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nsupplier_id SMALLINT NOT NULL CHECK (supplier_id>=0),\ndelivery_days TINYINT NOT NULL CHECK (delivery_days>=0),\nPRIMARY KEY (store_id,supplier_id),\nCONSTRAINT chk_delivery_days CHECK (delivery_days BETWEEN 1 AND 7),\nCONSTRAINT fk_store_supplier_store FOREIGN KEY (store_id) REFERENCES store (store_id),\nCONSTRAINT fk_store_supplier_supplier FOREIGN KEY (supplier_id) REFERENCES supplier (supplier_id)\n)"
+  },
+  "recipe": {
+    "columns": [
+      {
+        "name": "recipe_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "recipe_name",
+        "mysql_type": "VARCHAR(100)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "preparation_minutes",
+        "mysql_type": "DECIMAL(6,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "shelf_life_hours",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "recipe_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_recipe_product",
+        "columns": [
+          "product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_recipe_product FOREIGN KEY (product_id) REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "product_id"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_recipe CHECK (preparation_minutes>0 AND shelf_life_hours BETWEEN 1 AND 72)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE recipe (\nrecipe_id INT NOT NULL PRIMARY KEY CHECK (recipe_id>=0),\nproduct_id INT NOT NULL UNIQUE CHECK (product_id>=0),\nrecipe_name VARCHAR(100) NOT NULL,\npreparation_minutes DECIMAL(6,2) NOT NULL,\nshelf_life_hours SMALLINT NOT NULL CHECK (shelf_life_hours>=0),\nCONSTRAINT chk_recipe CHECK (preparation_minutes>0 AND shelf_life_hours BETWEEN 1 AND 72),\nCONSTRAINT fk_recipe_product FOREIGN KEY (product_id) REFERENCES product (product_id)\n)"
+  },
+  "recipe_ingredient": {
+    "columns": [
+      {
+        "name": "recipe_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "ingredient_product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_per_unit",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "recipe_id",
+      "ingredient_product_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_recipe_ingredient_recipe",
+        "columns": [
+          "recipe_id"
+        ],
+        "parent": "recipe",
+        "parent_columns": [
+          "recipe_id"
+        ],
+        "original": "CONSTRAINT fk_recipe_ingredient_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)"
+      },
+      {
+        "name": "fk_recipe_ingredient_product",
+        "columns": [
+          "ingredient_product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_recipe_ingredient_product FOREIGN KEY (ingredient_product_id) REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_recipe_quantity CHECK (quantity_per_unit>0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE recipe_ingredient (\nrecipe_id INT NOT NULL CHECK (recipe_id>=0),\ningredient_product_id INT NOT NULL CHECK (ingredient_product_id>=0),\nquantity_per_unit SMALLINT NOT NULL CHECK (quantity_per_unit>=0),\nPRIMARY KEY (recipe_id,ingredient_product_id),\nCONSTRAINT chk_recipe_quantity CHECK (quantity_per_unit>0),\nCONSTRAINT fk_recipe_ingredient_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),\nCONSTRAINT fk_recipe_ingredient_product FOREIGN KEY (ingredient_product_id) REFERENCES product (product_id)\n)"
+  },
+  "production_batch": {
+    "columns": [
+      {
+        "name": "production_batch_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "recipe_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "production_method",
+        "mysql_type": "ENUM('MADE_TO_ORDER','BATCH')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "scheduled_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "started_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "completed_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "available_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "expires_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_produced",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "ingredient_cost",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "packaging_cost",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "labor_minutes",
+        "mysql_type": "DECIMAL(10,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "sale_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "production_batch_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_production_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_production_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_production_recipe",
+        "columns": [
+          "recipe_id"
+        ],
+        "parent": "recipe",
+        "parent_columns": [
+          "recipe_id"
+        ],
+        "original": "CONSTRAINT fk_production_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)"
+      },
+      {
+        "name": "fk_production_sale",
+        "columns": [
+          "sale_id",
+          "sale_line_number"
+        ],
+        "parent": "sale_item",
+        "parent_columns": [
+          "sale_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_production_sale FOREIGN KEY (sale_id,sale_line_number) REFERENCES sale_item (sale_id,line_number)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "sale_id",
+        "sale_line_number"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_production CHECK (quantity_produced>0 AND ingredient_cost>=0 AND packaging_cost>=0 AND labor_minutes>0\n      AND scheduled_at<=started_at AND started_at<=completed_at AND completed_at<=available_at AND available_at<expires_at\n      AND ((production_method='MADE_TO_ORDER' AND store_id=1 AND sale_id IS NOT NULL AND sale_line_number IS NOT NULL)\n        OR (production_method='BATCH' AND store_id=2 AND sale_id IS NULL AND sale_line_number IS NULL)))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE production_batch (\nproduction_batch_id BIGINT NOT NULL PRIMARY KEY CHECK (production_batch_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nrecipe_id INT NOT NULL CHECK (recipe_id>=0),\nproduction_method VARCHAR NOT NULL CHECK (production_method IN ('MADE_TO_ORDER','BATCH')),\nscheduled_at TIMESTAMP NOT NULL,\nstarted_at TIMESTAMP NOT NULL,\ncompleted_at TIMESTAMP NOT NULL,\navailable_at TIMESTAMP NOT NULL,\nexpires_at TIMESTAMP NOT NULL,\nquantity_produced INT NOT NULL CHECK (quantity_produced>=0),\ningredient_cost DECIMAL(12,2) NOT NULL,\npackaging_cost DECIMAL(12,2) NOT NULL,\nlabor_minutes DECIMAL(10,2) NOT NULL,\nsale_id BIGINT NULL CHECK (sale_id>=0),\nsale_line_number SMALLINT NULL CHECK (sale_line_number>=0),\nCONSTRAINT uq_production_sale UNIQUE (sale_id,sale_line_number),\nCONSTRAINT chk_production CHECK (quantity_produced>0 AND ingredient_cost>=0 AND packaging_cost>=0 AND labor_minutes>0\n      AND scheduled_at<=started_at AND started_at<=completed_at AND completed_at<=available_at AND available_at<expires_at\n      AND ((production_method='MADE_TO_ORDER' AND store_id=1 AND sale_id IS NOT NULL AND sale_line_number IS NOT NULL)\n        OR (production_method='BATCH' AND store_id=2 AND sale_id IS NULL AND sale_line_number IS NULL))),\nCONSTRAINT fk_production_store FOREIGN KEY (store_id) REFERENCES store (store_id),\nCONSTRAINT fk_production_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),\nCONSTRAINT fk_production_sale FOREIGN KEY (sale_id,sale_line_number) REFERENCES sale_item (sale_id,line_number)\n)"
+  },
+  "production_input": {
+    "columns": [
+      {
+        "name": "production_batch_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "ingredient_product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "cost_amount",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "production_batch_id",
+      "line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_input_batch",
+        "columns": [
+          "production_batch_id"
+        ],
+        "parent": "production_batch",
+        "parent_columns": [
+          "production_batch_id"
+        ],
+        "original": "CONSTRAINT fk_input_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id)"
+      },
+      {
+        "name": "fk_input_product",
+        "columns": [
+          "ingredient_product_id"
+        ],
+        "parent": "product",
+        "parent_columns": [
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_input_product FOREIGN KEY (ingredient_product_id) REFERENCES product (product_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "production_batch_id",
+        "ingredient_product_id"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_production_input CHECK (line_number>0 AND quantity>0 AND cost_amount>=0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE production_input (\nproduction_batch_id BIGINT NOT NULL CHECK (production_batch_id>=0),\nline_number SMALLINT NOT NULL CHECK (line_number>=0),\ningredient_product_id INT NOT NULL CHECK (ingredient_product_id>=0),\nquantity INT NOT NULL CHECK (quantity>=0),\ncost_amount DECIMAL(12,2) NOT NULL,\nPRIMARY KEY (production_batch_id,line_number),\nCONSTRAINT uq_production_ingredient UNIQUE (production_batch_id,ingredient_product_id),\nCONSTRAINT chk_production_input CHECK (line_number>0 AND quantity>0 AND cost_amount>=0),\nCONSTRAINT fk_input_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id),\nCONSTRAINT fk_input_product FOREIGN KEY (ingredient_product_id) REFERENCES product (product_id)\n)"
+  },
+  "prepared_food_allocation": {
+    "columns": [
+      {
+        "name": "production_batch_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "production_batch_id",
+      "sale_id",
+      "sale_line_number"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_allocation_batch",
+        "columns": [
+          "production_batch_id"
+        ],
+        "parent": "production_batch",
+        "parent_columns": [
+          "production_batch_id"
+        ],
+        "original": "CONSTRAINT fk_allocation_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id)"
+      },
+      {
+        "name": "fk_allocation_sale",
+        "columns": [
+          "sale_id",
+          "sale_line_number"
+        ],
+        "parent": "sale_item",
+        "parent_columns": [
+          "sale_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_allocation_sale FOREIGN KEY (sale_id,sale_line_number) REFERENCES sale_item (sale_id,line_number)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_food_allocation CHECK (quantity>0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE prepared_food_allocation (\nproduction_batch_id BIGINT NOT NULL CHECK (production_batch_id>=0),\nsale_id BIGINT NOT NULL CHECK (sale_id>=0),\nsale_line_number SMALLINT NOT NULL CHECK (sale_line_number>=0),\nquantity SMALLINT NOT NULL CHECK (quantity>=0),\nPRIMARY KEY (production_batch_id,sale_id,sale_line_number),\nCONSTRAINT chk_food_allocation CHECK (quantity>0),\nCONSTRAINT fk_allocation_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id),\nCONSTRAINT fk_allocation_sale FOREIGN KEY (sale_id,sale_line_number) REFERENCES sale_item (sale_id,line_number)\n)"
+  },
+  "production_disposal": {
+    "columns": [
+      {
+        "name": "production_batch_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "adjustment_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "production_batch_id",
+      "adjustment_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_disposal_batch",
+        "columns": [
+          "production_batch_id"
+        ],
+        "parent": "production_batch",
+        "parent_columns": [
+          "production_batch_id"
+        ],
+        "original": "CONSTRAINT fk_disposal_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id)"
+      },
+      {
+        "name": "fk_disposal_adjustment",
+        "columns": [
+          "adjustment_id"
+        ],
+        "parent": "inventory_adjustment",
+        "parent_columns": [
+          "adjustment_id"
+        ],
+        "original": "CONSTRAINT fk_disposal_adjustment FOREIGN KEY (adjustment_id) REFERENCES inventory_adjustment (adjustment_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "adjustment_id"
+      ]
+    ],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_disposal_quantity CHECK (quantity>0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE production_disposal (\nproduction_batch_id BIGINT NOT NULL CHECK (production_batch_id>=0),\nadjustment_id BIGINT NOT NULL CHECK (adjustment_id>=0),\nquantity INT NOT NULL CHECK (quantity>=0),\nPRIMARY KEY (production_batch_id,adjustment_id),\nCONSTRAINT uq_disposal_adjustment UNIQUE (adjustment_id),\nCONSTRAINT chk_disposal_quantity CHECK (quantity>0),\nCONSTRAINT fk_disposal_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id),\nCONSTRAINT fk_disposal_adjustment FOREIGN KEY (adjustment_id) REFERENCES inventory_adjustment (adjustment_id)\n)"
+  },
+  "daily_labor": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "work_date",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "department_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "job_role_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "paid_hours",
+        "mysql_type": "DECIMAL(8,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "hourly_rate",
+        "mysql_type": "DECIMAL(7,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "wage_amount",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "employer_cost",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "benefit_cost",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "work_date",
+      "department_id",
+      "job_role_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_labor_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_labor_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      },
+      {
+        "name": "fk_labor_department",
+        "columns": [
+          "department_id"
+        ],
+        "parent": "department",
+        "parent_columns": [
+          "department_id"
+        ],
+        "original": "CONSTRAINT fk_labor_department FOREIGN KEY (department_id) REFERENCES department (department_id)"
+      },
+      {
+        "name": "fk_labor_role",
+        "columns": [
+          "job_role_id"
+        ],
+        "parent": "job_role",
+        "parent_columns": [
+          "job_role_id"
+        ],
+        "original": "CONSTRAINT fk_labor_role FOREIGN KEY (job_role_id) REFERENCES job_role (job_role_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_daily_labor CHECK (paid_hours>0 AND hourly_rate>0 AND wage_amount=ROUND(paid_hours*hourly_rate,2) AND employer_cost>=0 AND benefit_cost>=0)"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE daily_labor (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nwork_date DATE NOT NULL,\ndepartment_id TINYINT NOT NULL CHECK (department_id>=0),\njob_role_id TINYINT NOT NULL CHECK (job_role_id>=0),\npaid_hours DECIMAL(8,2) NOT NULL,\nhourly_rate DECIMAL(7,2) NOT NULL,\nwage_amount DECIMAL(12,2) NOT NULL,\nemployer_cost DECIMAL(12,2) NOT NULL,\nbenefit_cost DECIMAL(12,2) NOT NULL,\nPRIMARY KEY (store_id,work_date,department_id,job_role_id),\nCONSTRAINT chk_daily_labor CHECK (paid_hours>0 AND hourly_rate>0 AND wage_amount=ROUND(paid_hours*hourly_rate,2) AND employer_cost>=0 AND benefit_cost>=0),\nCONSTRAINT fk_labor_store FOREIGN KEY (store_id) REFERENCES store (store_id),\nCONSTRAINT fk_labor_department FOREIGN KEY (department_id) REFERENCES department (department_id),\nCONSTRAINT fk_labor_role FOREIGN KEY (job_role_id) REFERENCES job_role (job_role_id)\n)"
+  },
+  "dataset_metadata": {
+    "columns": [
+      {
+        "name": "dataset_id",
+        "mysql_type": "TINYINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "edition",
+        "mysql_type": "ENUM('FIXTURE','CLASSROOM','FULL')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reporting_start",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "reporting_end",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "timezone_name",
+        "mysql_type": "VARCHAR(40)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "seed",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "dataset_id"
+    ],
+    "foreign_keys": [],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_dataset CHECK (dataset_id=1 AND reporting_end>=reporting_start AND timezone_name='America/New_York')"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE dataset_metadata (\ndataset_id TINYINT NOT NULL PRIMARY KEY CHECK (dataset_id>=0),\nedition VARCHAR NOT NULL CHECK (edition IN ('FIXTURE','CLASSROOM','FULL')),\nreporting_start DATE NOT NULL,\nreporting_end DATE NOT NULL,\ntimezone_name VARCHAR(40) NOT NULL,\nseed INT NOT NULL CHECK (seed>=0),\nCONSTRAINT chk_dataset CHECK (dataset_id=1 AND reporting_end>=reporting_start AND timezone_name='America/New_York')\n)"
+  },
+  "inventory_movement": {
+    "columns": [
+      {
+        "name": "movement_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "product_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "moved_at",
+        "mysql_type": "DATETIME",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "movement_type",
+        "mysql_type": "ENUM('SALE','RECEIPT','RETURN','ADJUSTMENT','PRODUCTION_IN','PRODUCTION_OUT')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "quantity_change",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "value_change",
+        "mysql_type": "DECIMAL(14,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "sale_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "sale_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "receipt_id",
+        "mysql_type": "INT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "receipt_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "sale_return_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "return_line_number",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "adjustment_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "production_batch_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "production_input_line",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": true,
+        "generated": false
+      },
+      {
+        "name": "production_output_id",
+        "mysql_type": "BIGINT",
+        "scale": null,
+        "nullable": true,
+        "generated": true
+      }
+    ],
+    "primary_key": [
+      "movement_id"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_movement_batch",
+        "columns": [
+          "production_batch_id"
+        ],
+        "parent": "production_batch",
+        "parent_columns": [
+          "production_batch_id"
+        ],
+        "original": "CONSTRAINT fk_movement_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id)"
+      },
+      {
+        "name": "fk_movement_input",
+        "columns": [
+          "production_batch_id",
+          "production_input_line"
+        ],
+        "parent": "production_input",
+        "parent_columns": [
+          "production_batch_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_movement_input FOREIGN KEY (production_batch_id,production_input_line) REFERENCES production_input (production_batch_id,line_number)"
+      },
+      {
+        "name": "fk_movement_inventory",
+        "columns": [
+          "store_id",
+          "product_id"
+        ],
+        "parent": "store_inventory",
+        "parent_columns": [
+          "store_id",
+          "product_id"
+        ],
+        "original": "CONSTRAINT fk_movement_inventory FOREIGN KEY (store_id, product_id) REFERENCES store_inventory (store_id, product_id)"
+      },
+      {
+        "name": "fk_movement_sale",
+        "columns": [
+          "sale_id",
+          "sale_line_number"
+        ],
+        "parent": "sale_item",
+        "parent_columns": [
+          "sale_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_movement_sale FOREIGN KEY (sale_id, sale_line_number) REFERENCES sale_item (sale_id, line_number)"
+      },
+      {
+        "name": "fk_movement_receipt",
+        "columns": [
+          "receipt_id",
+          "receipt_line_number"
+        ],
+        "parent": "receipt_line",
+        "parent_columns": [
+          "receipt_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_movement_receipt FOREIGN KEY (receipt_id, receipt_line_number) REFERENCES receipt_line (receipt_id, line_number)"
+      },
+      {
+        "name": "fk_movement_return",
+        "columns": [
+          "sale_return_id",
+          "return_line_number"
+        ],
+        "parent": "sale_return_item",
+        "parent_columns": [
+          "sale_return_id",
+          "line_number"
+        ],
+        "original": "CONSTRAINT fk_movement_return FOREIGN KEY (sale_return_id, return_line_number) REFERENCES sale_return_item (sale_return_id, line_number)"
+      },
+      {
+        "name": "fk_movement_adjustment",
+        "columns": [
+          "adjustment_id"
+        ],
+        "parent": "inventory_adjustment",
+        "parent_columns": [
+          "adjustment_id"
+        ],
+        "original": "CONSTRAINT fk_movement_adjustment FOREIGN KEY (adjustment_id) REFERENCES inventory_adjustment (adjustment_id)"
+      }
+    ],
+    "unique_keys": [
+      [
+        "production_batch_id",
+        "production_input_line"
+      ],
+      [
+        "production_output_id"
+      ],
+      [
+        "sale_id",
+        "sale_line_number"
+      ],
+      [
+        "receipt_id",
+        "receipt_line_number"
+      ],
+      [
+        "sale_return_id",
+        "return_line_number"
+      ],
+      [
+        "adjustment_id"
+      ]
+    ],
+    "indexes": [
+      {
+        "name": "idx_movement_inventory_date",
+        "columns": "store_id, product_id, moved_at, movement_id"
+      }
+    ],
+    "checks": [
+      "CONSTRAINT chk_movement_sign CHECK (\n        quantity_change <> 0 AND quantity_change * value_change >= 0\n        AND (movement_type <> 'SALE' OR quantity_change < 0)\n        AND (movement_type NOT IN ('RECEIPT','RETURN') OR quantity_change > 0))",
+      "CONSTRAINT chk_movement_source CHECK (\n        (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='SALE' AND sale_id IS NOT NULL AND sale_line_number IS NOT NULL\n         AND receipt_id IS NULL AND receipt_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='RECEIPT' AND receipt_id IS NOT NULL AND receipt_line_number IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='RETURN' AND sale_return_id IS NOT NULL AND return_line_number IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='ADJUSTMENT' AND adjustment_id IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL)\n        OR (movement_type='PRODUCTION_IN' AND production_batch_id IS NOT NULL AND production_input_line IS NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL\n         AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL AND quantity_change>0)\n        OR (movement_type='PRODUCTION_OUT' AND production_batch_id IS NOT NULL AND production_input_line IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL\n         AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL AND quantity_change<0))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE inventory_movement (\nmovement_id BIGINT PRIMARY KEY CHECK (movement_id>=0),\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nproduct_id INT NOT NULL CHECK (product_id>=0),\nmoved_at TIMESTAMP NOT NULL,\nmovement_type VARCHAR NOT NULL CHECK (movement_type IN ('SALE','RECEIPT','RETURN','ADJUSTMENT','PRODUCTION_IN','PRODUCTION_OUT')),\nquantity_change INT NOT NULL,\nvalue_change DECIMAL(14,2) NOT NULL,\nsale_id BIGINT NULL CHECK (sale_id>=0),\nsale_line_number SMALLINT NULL CHECK (sale_line_number>=0),\nreceipt_id INT NULL CHECK (receipt_id>=0),\nreceipt_line_number SMALLINT NULL CHECK (receipt_line_number>=0),\nsale_return_id BIGINT NULL CHECK (sale_return_id>=0),\nreturn_line_number SMALLINT NULL CHECK (return_line_number>=0),\nadjustment_id BIGINT NULL CHECK (adjustment_id>=0),\nproduction_batch_id BIGINT NULL CHECK (production_batch_id>=0),\nproduction_input_line SMALLINT NULL CHECK (production_input_line>=0),\nCONSTRAINT uq_movement_production UNIQUE (production_batch_id,production_input_line),\nproduction_output_id BIGINT CHECK (production_output_id>=0) CHECK (production_output_id IS NOT DISTINCT FROM (CASE WHEN movement_type='PRODUCTION_IN' THEN production_batch_id ELSE NULL END)),\nCONSTRAINT uq_production_output UNIQUE (production_output_id),\nCONSTRAINT uq_movement_sale UNIQUE (sale_id, sale_line_number),\nCONSTRAINT uq_movement_receipt UNIQUE (receipt_id, receipt_line_number),\nCONSTRAINT uq_movement_return UNIQUE (sale_return_id, return_line_number),\nCONSTRAINT uq_movement_adjustment UNIQUE (adjustment_id),\nCONSTRAINT chk_movement_sign CHECK (\n        quantity_change <> 0 AND quantity_change * value_change >= 0\n        AND (movement_type <> 'SALE' OR quantity_change < 0)\n        AND (movement_type NOT IN ('RECEIPT','RETURN') OR quantity_change > 0)),\nCONSTRAINT chk_movement_source CHECK (\n        (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='SALE' AND sale_id IS NOT NULL AND sale_line_number IS NOT NULL\n         AND receipt_id IS NULL AND receipt_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='RECEIPT' AND receipt_id IS NOT NULL AND receipt_line_number IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='RETURN' AND sale_return_id IS NOT NULL AND return_line_number IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL AND adjustment_id IS NULL)\n        OR (production_batch_id IS NULL AND production_input_line IS NULL AND movement_type='ADJUSTMENT' AND adjustment_id IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL AND sale_return_id IS NULL AND return_line_number IS NULL)\n        OR (movement_type='PRODUCTION_IN' AND production_batch_id IS NOT NULL AND production_input_line IS NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL\n         AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL AND quantity_change>0)\n        OR (movement_type='PRODUCTION_OUT' AND production_batch_id IS NOT NULL AND production_input_line IS NOT NULL\n         AND sale_id IS NULL AND sale_line_number IS NULL AND receipt_id IS NULL AND receipt_line_number IS NULL\n         AND sale_return_id IS NULL AND return_line_number IS NULL AND adjustment_id IS NULL AND quantity_change<0)),\nCONSTRAINT fk_movement_batch FOREIGN KEY (production_batch_id) REFERENCES production_batch (production_batch_id),\nCONSTRAINT fk_movement_input FOREIGN KEY (production_batch_id,production_input_line) REFERENCES production_input (production_batch_id,line_number),\nCONSTRAINT fk_movement_inventory FOREIGN KEY (store_id, product_id) REFERENCES store_inventory (store_id, product_id),\nCONSTRAINT fk_movement_sale FOREIGN KEY (sale_id, sale_line_number) REFERENCES sale_item (sale_id, line_number),\nCONSTRAINT fk_movement_receipt FOREIGN KEY (receipt_id, receipt_line_number) REFERENCES receipt_line (receipt_id, line_number),\nCONSTRAINT fk_movement_return FOREIGN KEY (sale_return_id, return_line_number) REFERENCES sale_return_item (sale_return_id, line_number),\nCONSTRAINT fk_movement_adjustment FOREIGN KEY (adjustment_id) REFERENCES inventory_adjustment (adjustment_id)\n)"
+  },
+  "store_operating_expense": {
+    "columns": [
+      {
+        "name": "store_id",
+        "mysql_type": "SMALLINT",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "expense_month",
+        "mysql_type": "DATE",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "expense_type",
+        "mysql_type": "ENUM('LABOR','PAYROLL_COST','BENEFITS','OCCUPANCY','UTILITIES','INSURANCE','MAINTENANCE','PROCESSING','EQUIPMENT','SUPPLIES','DEPRECIATION','LICENSES','OTHER')",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "full_store_budget",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "allocation_rate",
+        "mysql_type": "DECIMAL(7,6)",
+        "scale": 6,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "allocated_amount",
+        "mysql_type": "DECIMAL(12,2)",
+        "scale": 2,
+        "nullable": false,
+        "generated": false
+      },
+      {
+        "name": "assumption",
+        "mysql_type": "VARCHAR(255)",
+        "scale": null,
+        "nullable": false,
+        "generated": false
+      }
+    ],
+    "primary_key": [
+      "store_id",
+      "expense_month",
+      "expense_type"
+    ],
+    "foreign_keys": [
+      {
+        "name": "fk_expense_store",
+        "columns": [
+          "store_id"
+        ],
+        "parent": "store",
+        "parent_columns": [
+          "store_id"
+        ],
+        "original": "CONSTRAINT fk_expense_store FOREIGN KEY (store_id) REFERENCES store (store_id)"
+      }
+    ],
+    "unique_keys": [],
+    "indexes": [],
+    "checks": [
+      "CONSTRAINT chk_expense CHECK (DAY(expense_month)=1 AND full_store_budget >= 0\n        AND allocation_rate > 0 AND allocation_rate <= 1\n        AND allocated_amount=ROUND(full_store_budget*allocation_rate,2))"
+    ],
+    "omitted_physical_constraints": [],
+    "ddl": "CREATE TABLE store_operating_expense (\nstore_id SMALLINT NOT NULL CHECK (store_id>=0),\nexpense_month DATE NOT NULL,\nexpense_type VARCHAR NOT NULL CHECK (expense_type IN ('LABOR','PAYROLL_COST','BENEFITS','OCCUPANCY','UTILITIES','INSURANCE','MAINTENANCE','PROCESSING','EQUIPMENT','SUPPLIES','DEPRECIATION','LICENSES','OTHER')),\nfull_store_budget DECIMAL(12,2) NOT NULL,\nallocation_rate DECIMAL(7,6) NOT NULL,\nallocated_amount DECIMAL(12,2) NOT NULL,\nassumption VARCHAR(255) NOT NULL,\nPRIMARY KEY (store_id, expense_month, expense_type),\nCONSTRAINT chk_expense CHECK (DAY(expense_month)=1 AND full_store_budget >= 0\n        AND allocation_rate > 0 AND allocation_rate <= 1\n        AND allocated_amount=ROUND(full_store_budget*allocation_rate,2)),\nCONSTRAINT fk_expense_store FOREIGN KEY (store_id) REFERENCES store (store_id)\n)"
+  }
+}

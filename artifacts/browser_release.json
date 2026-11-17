@@ -1,0 +1,21 @@
+{
+  "version": "2.1-browser-lab-001",
+  "source_edition": "CLASSROOM",
+  "source_sql_sha256": "009bdc02525a30f2fe0e2617a001e2ad1cba443cb17e0915c761e12bf7649f07",
+  "tables": 44,
+  "records": 2083396,
+  "database": {
+    "url": "/sql-workbench-test/artifacts/classroom.duckdb.gz",
+    "bytes": 276049920,
+    "sha256": "5bfae7682355a6cbda58d399766aded477479bf1f5ca5e29a68c4a176fefd4d4",
+    "gzip_bytes": 53783854,
+    "gzip_sha256": "33807da4d7f6e165940fef6cfc1be5e06ba43f548985d146d1f1cd9eb5a43704",
+    "gzip_seconds": 15.753727499977686
+  },
+  "engine": {
+    "package": "@duckdb/duckdb-wasm",
+    "version": "1.32.0",
+    "core": "v1.4.3",
+    "bundle": "eh"
+  }
+}
